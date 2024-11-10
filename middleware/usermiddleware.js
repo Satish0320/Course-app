@@ -1,7 +1,7 @@
 const jwt  = require("jsonwebtoken");
 const { JWT_USER_SECRET } = require("../cofig.js/config");
 
-function usermiddlewre(req, res, next){
+function usermiddleware(req, res, next){
     const authorization = req.headers.authorization;
     const decode = jwt.verify(authorization, JWT_USER_SECRET);
 
@@ -15,6 +15,8 @@ function usermiddlewre(req, res, next){
     }
 }
 
-module.exports = {
-    usermiddlewre: usermiddlewre
-}
+module.exports =  {
+        usermiddleware: usermiddleware
+    }
+
+   

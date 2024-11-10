@@ -153,8 +153,8 @@ adminRouter.put("/add/content", adminmiddleware, async (req, res) => {
     const courseId = req.body.courseId
 
     const course = await CourseModel.updateOne({
-        _id: courseId,  //672fc80bb774f2825014d177
-        adminId: adminId   //672fb1b72863a032b086d1d2
+        _id: courseId,  
+        adminId: adminId   
     },{
         title: title,
         description: description,

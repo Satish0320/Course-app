@@ -3,10 +3,10 @@ const z = require("zod")
 const bcrypt = require("bcrypt");
 const { Router } = require("express");
 const userRouter = Router();
-const { UserModel, PurchaseModel } = require("../Database/DB");
+const { UserModel, PurchaseModel, CourseModel } = require("../Database/DB");
 const express = require("express");
 const { JWT_USER_SECRET } = require("../cofig.js/config");
-const { usermiddlewre } = require("../middleware/usermiddleware")
+const  {usermiddleware}  = require("../middleware/usermiddleware")
 
 userRouter.post("/signup", async (req, res) => {
 
@@ -86,12 +86,27 @@ userRouter.post("/login", async(req, res) => {
 })
 
 
-userRouter.get("/purchase", usermiddlewre, (req, res) => {
+userRouter.get("/purchases", usermiddleware, async (req, res) => {
+    
+    const userId= req.userId;
+
+    const purchases = await PurchaseModel.find({
+        userId
+    })
+
+    const coursedata = await CourseModel.find({
+        _id: {
+            $in: purchases.map(x => x.courseId)
+        }
+    })
+
     res.json({
-        message: "purchase"
+        purchases,
+        coursedata
     })
 })
 
 module.exports = {
     userRouter: userRouter
 }
+
